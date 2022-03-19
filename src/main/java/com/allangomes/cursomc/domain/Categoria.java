@@ -3,12 +3,36 @@ package com.allangomes.cursomc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CATEGORIA")
 public class Categoria implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
 	private Integer id;
+
+    @Column(name = "NOME", length = 255, nullable = false)
 	private String nome;
-	
+
+    @Deprecated
+    public Categoria() {
+	}
+
+	public Categoria(Integer id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
+    
 	public Integer getId() {
 		return id;
 	}
@@ -28,12 +52,6 @@ public class Categoria implements Serializable{
 			return false;
 		Categoria other = (Categoria) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	public Categoria(Integer id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
 	}
 
 	public void setId(Integer id) {
