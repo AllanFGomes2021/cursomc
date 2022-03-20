@@ -1,7 +1,6 @@
 package com.allangomes.cursomc;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,12 +8,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.allangomes.cursomc.domain.Categoria;
 import com.allangomes.cursomc.domain.Cidade;
+import com.allangomes.cursomc.domain.Cliente;
+import com.allangomes.cursomc.domain.Endereco;
 import com.allangomes.cursomc.domain.Estado;
 import com.allangomes.cursomc.domain.Produto;
+import com.allangomes.cursomc.domain.enums.TipoCliente;
 import com.allangomes.cursomc.repositories.CategoriaRepository;
 import com.allangomes.cursomc.repositories.CidadeRepository;
 import com.allangomes.cursomc.repositories.EstadoRepository;
 import com.allangomes.cursomc.repositories.ProdutoRepository;
+import com.allangomes.cursomc.repositories.ClienteRepository;
+import com.allangomes.cursomc.repositories.EnderecoRepository;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
@@ -31,13 +35,18 @@ public class CursomcApplication implements CommandLineRunner {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-/*
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Administração");
 		
@@ -51,7 +60,7 @@ public class CursomcApplication implements CommandLineRunner {
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
-*/
+
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 		Cidade c1 = new Cidade(null, "Uberlândia", est1);
@@ -60,12 +69,21 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
-/*
+
+		Cliente cli1 = new Cliente(null, "Maria", "maria@com", "123", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("1-1", "2-2"));
+		
+		Endereco e1 = new Endereco(null, "Rua a", "1", "bl", "LS", "0001", cli1, c1);
+		Endereco e2 = new Endereco(null, "Av m", "2", "cl", "SS", "0002", cli1, c2);
+			
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-*/
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 	}
 
 }
