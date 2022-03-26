@@ -2,8 +2,10 @@ package com.allangomes.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -41,6 +44,9 @@ public class Produto implements Serializable {
     )
     private List<Categoria> categorias = new ArrayList<>(); 
     
+    @JsonBackReference
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
     
     @Deprecated
     public Produto() {
@@ -53,22 +59,14 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		return Objects.equals(id, other.id);
-	}
+    public List<Pedido> getPedidos() {
+    	List<Pedido> lista = new ArrayList<>();
+    	for (ItemPedido item: itens) {
+    		lista.add(item.getPedido());
+    	}
+    	
+    	return lista;
+    }
 
 	public Integer getId() {
 		return id;
@@ -102,5 +100,30 @@ public class Produto implements Serializable {
 		this.categorias = categorias;
 	}
     
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		return Objects.equals(id, other.id);
+	}
     
 }
