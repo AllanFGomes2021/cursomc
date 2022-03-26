@@ -1,3 +1,10 @@
+//
+// NO CASO DE HAVER ERROR DE REFERENCIAS CICLICAS
+//   AONDE TIVER @JsonManagedReference
+//         RETIRAR
+//   AONDE TIVER @JsonBackReference
+//         COLOCAR JsonIgnore
+//
 package com.allangomes.cursomc;
 
 import java.util.Arrays;
@@ -29,6 +36,7 @@ import com.allangomes.cursomc.repositories.ItemPedidoRepository;
 import com.allangomes.cursomc.repositories.PagamentoRepository;
 import com.allangomes.cursomc.repositories.PedidoRepository;
 import com.allangomes.cursomc.repositories.ProdutoRepository;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {

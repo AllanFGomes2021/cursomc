@@ -12,9 +12,11 @@ import com.allangomes.cursomc.domain.enums.EstadoPagamento;
 public class PagamentoComBoleto extends Pagamento{
 	private static final long serialVersionUID = 1L;
 
+//  @JsonFormat(pattern="dd/mm/yyyy")
 	@Column(name = "DATAVENCIMENTO", nullable = false)
 	private String dataVencimento;
 
+//  @JsonFormat(pattern="dd/mm/yyyy")
 	@Column(name = "DATAPAGAMENTO")
 	private String dataPagamento;
 	
